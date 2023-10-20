@@ -1,3 +1,5 @@
 .benchmarks
 .pytest_cache
 src/slushie.egg-info
+build
+dist

@@ -44,3 +44,12 @@ def test_scoop(tmp_path):
         file.write('Hello, Slushie!')
     with open(file_path, 'r') as file:
         assert file.read() == 'Hello, Slushie!'
+    with scoop(file_path, 'a') as file:
+        file.write(' Hello, World!')
+    with open(file_path, 'r') as file:
+        assert file.read() == 'Hello, Slushie! Hello, World!'
+    # test encoding
+    with scoop(file_path, 'w', encoding='utf-8') as file:
+        file.write('Hello, Slushie!')
+    with open(file_path, 'r', encoding='utf-8') as file:
+        assert file.read() == 'Hello, Slushie!'

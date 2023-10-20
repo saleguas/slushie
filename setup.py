@@ -15,7 +15,7 @@ setup(
     author='Salvador Aleguas',
     author_email='salvadoraleguas@example.com',  # Add your email here
     description='Slushie: A Python library for relative path manipulation.',
-    long_description=open('README.md').read(),
+    long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     license='MIT',
     keywords='path sys-path manipulation python-path module-path',

@@ -2,6 +2,7 @@ import os
 import sys
 from contextlib import contextmanager
 from typing import Tuple, Iterator, Any, TextIO, Optional
+import inspect
 
 def sip(*parts: str) -> str:
     """
@@ -10,7 +11,11 @@ def sip(*parts: str) -> str:
     :param parts: Parts of the path to join.
     :return: Absolute path.
     """
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), *parts))
+    print(inspect.stack())
+    caller_frame = inspect.stack()[-1]
+    caller_path = os.path.dirname(os.path.abspath(caller_frame.filename))
+    return os.path.abspath(os.path.join(caller_path, *parts))
+    # return os.path.abspath(os.path.join(os.path.dirname(melt()), *parts))
 
 @contextmanager
 def gulp(directory: str = '.') -> Iterator[None]:
@@ -53,7 +58,6 @@ def melt() -> str:
     
     :return: Directory of the calling script.
     """
-    import inspect
     caller_frame = inspect.stack()[1]
     caller_path = os.path.dirname(os.path.abspath(caller_frame.filename))
     return caller_path
