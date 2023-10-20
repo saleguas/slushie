@@ -2,6 +2,10 @@
 
 Welcome to Slushie, an intuitive solution to Python's relative path disaster. 🍭 Ever wanted to just get a file from a sibling or parent directory without pulling your hair out? Slushie is the perfect "it just works" solution to all your path management problems. 🍦
 
+<!-- include media/slushie.gif -->
+
+![Slushie Demo](media/slushie.gif)
+
 ## Table of Contents
 
 - [🚀 Installation](#-installation)
@@ -12,7 +16,7 @@ Welcome to Slushie, an intuitive solution to Python's relative path disaster. �
 
 ## 🚀 Installation
 
-Slushie is ready to chill in your project. Install it directly from PyPI:
+Install it directly from PyPI:
 
 ```
 pip install slushie
@@ -20,11 +24,10 @@ pip install slushie
 
 ## 🌈 Usage
 
-Slurp in the delightful functionalities of Slushie:
 
 ### sip(*parts: str) -> str
 
-**Purpose**: Create absolute paths relative to the current script. Ideal for accessing files in parent or sibling directories without a fuss.
+**Purpose**: Create absolute paths relative to the current FILE. Ideal for accessing files in parent or sibling directories without a fuss.
 
 #### Parameters:
 - `*parts: str` - Parts of the path to join.
@@ -46,8 +49,25 @@ print(path)
 
 # Output:
 # /path/to/project/folder2/hello.txt
+# In this case, sip('.') refers to /path/to/project/folder1/
 ```
 
+The above code is fundamentally equivalent to the following:
+
+```python
+import os
+import sys
+
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'folder2', 'hello.txt')
+print(path)
+
+# Output:
+# /path/to/project/folder2/hello.txt
+```
+
+This is extremely useful, as if you ever need to open a file, such as a csv for data analysis or a text file for logging, you should almost always be using relative paths as to avoid breaking your code when you move it to a different machine or share it with someone else. Slushie makes this easy.
+
+```python
 ### gulp(directory: str = '.') -> Iterator[None]
 
 **Purpose**: Temporarily include directories in the Python path, easing the import of modules/packages.
@@ -78,7 +98,7 @@ import a_module_from_another_directory
 
 ### pour(directory: str = '.') -> Iterator[Tuple[str, str]]
 
-**Purpose**: Easily access the current and parent directory paths.
+**Purpose**: Easily access the current and parent directory paths of the current file the code is being written in.
 
 #### Parameters:
 - `directory: str` - Directory to get paths for.
@@ -130,7 +150,7 @@ Literally the same as the built-in `open()` function. It's just a wrapper around
 
 #### Usage:
 ```python
-with scoop('data.txt', 'r') as file:
+with scoop('../data.txt', 'r') as file:
     data = file.read()
     print(data)
 ```
