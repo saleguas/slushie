@@ -20,10 +20,12 @@ def gulp(directory: str = '.') -> Iterator[None]:
     :param directory: Directory to add subdirectories from.
     """
     old_path = sys.path.copy()
+    sys.path.append(directory)  # Adding the specified directory itself
     for root, dirs, files in os.walk(directory):
         sys.path.append(root)
     yield
     sys.path = old_path
+
 
 def freeze(path: str) -> None:
     """
