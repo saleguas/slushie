@@ -23,13 +23,13 @@ def gulp(directory: str = '.') -> Iterator[None]:
     
     :param directory: Directory to add subdirectories from.
     """
+    directory = sip(directory)  # Using sip() to get absolute path relative to script
     old_path = sys.path.copy()
-    sys.path.append(directory)  # Adding the specified directory itself
+    sys.path.append(directory)
     for root, dirs, files in os.walk(directory):
         sys.path.append(root)
     yield
     sys.path = old_path
-
 
 def freeze(path: str) -> None:
     """
@@ -47,8 +47,7 @@ def pour(directory: str = '.') -> Iterator[Tuple[str, str]]:
     :param directory: Directory to get paths for.
     :return: Current and parent directory paths.
     """
-    current_dir = os.path.abspath(directory)
-    parent_dir = os.path.abspath(os.path.join(directory, '..'))
+    current_dir, parent_dir = sip(directory), sip(directory, '..')  # Using sip()
     yield current_dir, parent_dir
 
 def melt() -> str:
