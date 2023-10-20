@@ -11,7 +11,6 @@ def sip(*parts: str) -> str:
     :param parts: Parts of the path to join.
     :return: Absolute path.
     """
-    print(inspect.stack())
     caller_frame = inspect.stack()[-1]
     caller_path = os.path.dirname(os.path.abspath(caller_frame.filename))
     return os.path.abspath(os.path.join(caller_path, *parts))
