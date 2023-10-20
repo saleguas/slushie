@@ -1,6 +1,6 @@
 # Slushie 🍧
 
-Welcome to Slushie, an intuitive solution to Python's relative path disaster. 🍭 Ever wanted to just get a file from a sibling or parent directory without pulling your hair out? Slushie is the perfect "it just works" solution to all your path management problems. 🍦
+🍭 Ever wanted to just get a file from a sibling or parent directory without pulling your hair out? Slushie is the perfect "it just works" solution to relative paths in Python.
 
 <!-- include media/slushie.gif -->
 
@@ -8,11 +8,56 @@ Welcome to Slushie, an intuitive solution to Python's relative path disaster. �
 
 ## Table of Contents
 
+- [❔ Why Slushie?](#-why-slushie)
 - [🚀 Installation](#-installation)
 - [🌈 Usage](#-usage)
 - [🔬 Running Tests](#-running-tests)
 - [🤝 Contributing](#-contributing)
 - [📜 License](#-license)
+
+## ❔ Why Slushie?
+
+Relative paths and imports in Python are an absolute nightmare due to how `PYTHONPATH` works and finds modules.
+
+For example, 
+```
+project_root/
+│   main.py
+│
+├───package1/
+│   │   module1.py
+│   │   file.csv
+│   │
+│   └───subpackage1/
+│       │   module2.py
+```
+
+If I wanted to import `module1.py` from `main.py`, you'd think it would be something like the following:
+
+```
+from package1 import module1
+from package1.subpackage1 import module2
+```
+
+<!-- bold -->
+
+**This (most likely) will not work. Why?**
+
+Python relies on the dreaded `PYTHONPATH` environment variable to determine where to look for modules to import. 
+
+`PYTHONPATH` is a list of directories that Python checks whenever you attempt an import. If `package1` and `subpackage1` are not included in the `PYTHONPATH`, Python doesn’t know where to look for `module1.py`, and `module2.py`, resulting in an `ImportError`.
+
+Additionally, attempting to open `file.csv`, using the traditional open command like this:
+
+```
+open("package1/file.csv")
+```
+
+will most likely not even find the file, and even if it does, there's a high chance it will break if it is ever moved to another machine.
+
+This is because the search for `file.csv` is relative to the current working directory where the Python script is executed, not necessarily where main.py is located.
+
+**TL;DR: If you use python's default import and open commands, you either have to do some Python witchcraft or risk randomly breaking your code.**
 
 ## 🚀 Installation
 
