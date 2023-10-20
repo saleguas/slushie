@@ -13,8 +13,8 @@ setup(
     
     # Metadata
     author='Salvador Aleguas',
-    author_email='your.email@example.com',  # Add your email here
-    description='Slushie: A nifty Python library for path and sys.path management',
+    author_email='salvadoraleguas@example.com',  # Add your email here
+    description='Slushie: A Python library for relative path manipulation.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     license='MIT',
