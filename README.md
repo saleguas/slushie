@@ -53,7 +53,7 @@ Additionally, attempting to open `file.csv`, using the traditional open command 
 open("package1/file.csv")
 ```
 
-will most likely not even find the file, and even if it does, there's a high chance it will break if it is ever moved to another machine.
+will most likely not even find the file, and even if it does, there's a high chance it will break if it is ever moved to another machine or ran from a different directory.
 
 This is because the search for `file.csv` is relative to the current working directory where the Python script is executed, not necessarily where main.py is located.
 
