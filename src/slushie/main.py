@@ -4,17 +4,22 @@ from contextlib import contextmanager
 from typing import Tuple, Iterator, Any, TextIO, Optional
 import inspect
 
+
 def sip(*parts: str) -> str:
     """
-    Get the absolute path relative to the current script's directory.
-    
+    Get the absolute path relative to the file that is calling this function.
+
     :param parts: Parts of the path to join.
     :return: Absolute path.
     """
+    # Get the frame of the caller
     caller_frame = inspect.stack()[1]
-    caller_path = os.path.dirname(os.path.abspath(caller_frame.filename))
-    return os.path.abspath(os.path.join(caller_path, *parts))
-    # return os.path.abspath(os.path.join(os.path.dirname(melt()), *parts))
+    # Retrieve the path of the file from which this function was called
+    caller_path = caller_frame.filename
+    # Get the directory of the caller file
+    caller_dir = os.path.dirname(os.path.abspath(caller_path))
+    # Join the caller directory with the specified parts
+    return os.path.abspath(os.path.join(caller_dir, *parts))
 
 @contextmanager
 def gulp(directory: str = '.') -> Iterator[None]:
